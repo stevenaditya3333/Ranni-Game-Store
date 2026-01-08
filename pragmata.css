@@ -1,0 +1,43 @@
+body {
+  background-color: #050814; /* sangat gelap, sci‑fi vibe */
+  color: #e0eaff; /* teks putih lembut */
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+h1, h2 {
+  color: #7fffd4; /* teal neon ringan */
+  text-shadow: 0px 0px 6px rgba(127, 255, 212, 0.6);
+}
+
+img {
+  border: 2px solid #16213e;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(31, 58, 147, 0.5);
+}
+
+button, input[type="submit"] {
+  background-color: #0a2540;
+  color: #7fffd4;
+  border: 1px solid #1f3a93;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: #1f3a93;
+  color: #fff;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.discounted-price {
+  color: #7fffd4;
+  font-weight: bold;
+}
+
+

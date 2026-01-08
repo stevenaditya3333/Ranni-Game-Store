@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Ranni Game Store - Daftar Transaksi</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #eee;
+    margin: 0;
+  }
+
+  header {
+    background: #000;
+    text-align: center;
+    padding: 15px;
+  }
+
+  nav a {
+    color: #00ffe1;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+
+  main {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+
+  th, td {
+    border: 1px solid #555;
+    padding: 10px;
+    text-align: center;
+  }
+
+  th {
+    background: #222;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: #ff3b3b;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .kosong {
+    text-align: center;
+    margin-top: 20px;
+    color: #aaa;
+    font-style: italic;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Ranni Game Store</h1>
+  <nav>
+    <a href="transaksi.html">⬅ Kembali ke Transaksi</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Daftar Transaksi</h2>
+
+  <table id="tabel">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama Game</th>
+        <th>Jumlah</th>
+        <th>Kategori</th>
+        <th>Harga</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="tabelTransaksi"></tbody>
+  </table>
+
+  <p id="kosong" class="kosong" style="display:none;">
+    Belum ada transaksi.
+  </p>
+
+  <button onclick="resetData()">Reset Semua Transaksi</button>
+</main>
+
+<script>
+  function formatRupiah(angka) {
+    return "Rp " + angka.toLocaleString("id-ID");
+  }
+
+  const data = JSON.parse(localStorage.getItem("transaksi")) || [];
+  const tbody = document.getElementById("tabelTransaksi");
+  const kosong = document.getElementById("kosong");
+  const tabel = document.getElementById("tabel");
+
+  if (data.length === 0) {
+    tabel.style.display = "none";
+    kosong.style.display = "block";
+  } else {
+    data.forEach((item, index) => {
+      const row = tbody.insertRow();
+      row.insertCell(0).innerText = index + 1;
+      row.insertCell(1).innerText = item.game;
+      row.insertCell(2).innerText = item.jumlah;
+      row.insertCell(3).innerText = item.kategori;
+      row.insertCell(4).innerText = formatRupiah(item.harga);
+      row.insertCell(5).innerText = formatRupiah(item.total);
+    });
+  }
+
+  function resetData() {
+    if (confirm("Yakin mau menghapus semua transaksi?")) {
+      localStorage.removeItem("transaksi");
+      location.reload();
+    }
+  }
+</script>
+
+</body>
+</html>

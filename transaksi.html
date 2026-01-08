@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Ranni Game Store - Transaksi</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+
+    header, footer {
+      background: #000;
+      text-align: center;
+      padding: 15px;
+    }
+
+    nav a {
+      color: #00ffe1;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    form {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      background: #222;
+      color: #eee;
+      border: 1px solid #555;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      background: #00ffe1;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .link-daftar {
+      margin-bottom: 15px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Ranni Game Store</h1>
+  <nav>
+    <a href="index.html">Beranda</a> |
+    <a href="transaksi.html">Transaksi</a> |
+    <a href="profil.html">Profil</a> |
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<main>
+
+  <h2>Form Transaksi</h2>
+
+  <form id="formTransaksi">
+    <label>Pilih Game:</label>
+    <select id="nama">
+      <option value="">-- Pilih Game --</option>
+      <option>Resident Evil 4 Remake</option>
+      <option>Cyberpunk 2077</option>
+      <option>Elden Ring</option>
+      <option>Resident Evil Requiem</option>
+      <option>Silent Hill f</option>
+      <option>Pragmata</option>
+      <option>Resident Evil 2 Remake</option>
+    </select>
+
+    <label>Harga (sudah termasuk diskon)</label>
+    <input type="text" id="harga" readonly>
+
+    <label>Jumlah</label>
+    <input type="number" id="jumlah" min="1">
+
+    <label>Kategori</label>
+    <select id="kategori">
+      <option value="">-- Pilih Kategori --</option>
+      <option>Game PC</option>
+      <option>Game PS5</option>
+      <option>Game Digital</option>
+      <option>Game Fisik</option>
+    </select>
+
+    <button type="submit">Simpan Transaksi</button>
+  </form>
+
+  <a href="dftr.html" class="link-daftar">📋 Lihat Daftar Transaksi</a>
+
+</main>
+
+<footer>
+  <p>© 2026 Ranni Game Store</p>
+</footer>
+
+<script>
+  const gameStore = {
+    "Resident Evil 4 Remake": 449000,
+    "Cyberpunk 2077": 399000,
+    "Elden Ring": 359000,
+    "Resident Evil Requiem": 910000,
+    "Silent Hill f": 600500,
+    "Pragmata": 779000,
+    "Resident Evil 2 Remake": 259000
+  };
+
+  function formatRupiah(angka) {
+    return "Rp " + angka.toLocaleString("id-ID");
+  }
+
+  // TAMPILKAN HARGA OTOMATIS
+  document.getElementById("nama").addEventListener("change", function () {
+    const game = this.value;
+    document.getElementById("harga").value =
+      gameStore[game] ? formatRupiah(gameStore[game]) : "";
+  });
+
+  document.getElementById("formTransaksi").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const game = document.getElementById("nama").value;
+    const jumlah = document.getElementById("jumlah").value;
+    const kategori = document.getElementById("kategori").value;
+
+    if (!gameStore[game] || jumlah === "" || kategori === "") {
+      alert("Data tidak valid!");
+      return;
+    }
+
+    const harga = gameStore[game];
+    const total = harga * jumlah;
+
+    const transaksi = { game, jumlah, kategori, harga, total };
+
+    let data = JSON.parse(localStorage.getItem("transaksi")) || [];
+    data.push(transaksi);
+    localStorage.setItem("transaksi", JSON.stringify(data));
+
+    alert("Transaksi berhasil disimpan!");
+    this.reset();
+    document.getElementById("harga").value = "";
+  });
+</script>
+
+</body>
+</html>
